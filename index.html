@@ -1,0 +1,91 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>BOGGLE</title>
+        <script
+          src="http://code.jquery.com/jquery-3.2.1.min.js">
+        </script>
+    </head>
+    <body>
+        <h1 id="head ">PLAY BOGGLE</h1>
+        <form>
+            Enter exactly 16 letters (w/ NO SPACES): <input type="text" id="letters" value="abcdefghijklmnop"><br>
+        </form>
+        
+        <button id="start">START</button> 
+        <div id="board"></div>
+        <button id="getButton">aa</button> 
+        <div id="everything"></div>
+     
+     
+        <script>
+     
+     
+        function buildBoard(val){ //TODO: pop up window?
+            var myBoard = "";
+            for (var i = 0; i <= 15; i++){
+                myBoard += val[i];
+                if(val[i] == "q")
+                    myBoard+="u";
+                if((i+1)%4==0)
+                    myBoard += "<br>";
+                else
+                    myBoard+= "  ";
+            }
+            $("#board").html(myBoard); 
+        }
+        
+
+     
+        function translate(){
+            console.log();
+            var myurl = "http://api.codebox.org.uk/boggle/" + $("#letters").val();
+            
+             $.ajax({
+                url : myurl,
+                    dataType : "json",
+                    success : function(parsed_json) {
+                        
+                       buildBoard($("#letters").val());
+                        
+                        var everything = "<h2>all possible words:</h2><ul>";
+                        for(var i = 0; i < parsed_json.length; i++){
+                            everything += "<li>" + parsed_json[i] + "</li>";
+                        }
+                        if(parsed_json.length == 0)
+                            everything += "<p>sorry, no words found!";
+                        everything+="</ul>";
+                        $("#everything").html(everything);
+                    }
+            });
+         }
+         
+         
+         $("#start").click(function(){
+             $("#everything").html("");
+             var val = $("#letters").val();
+             if(val.length != 16){
+                 alert("PLEASE INPUT 16 LETTERS W/ NO SPACES (IE abcdefghijklmnop)");
+             }
+             else
+                buildBoard($("#letters").val());
+         });
+         
+         
+         $("#getButton").click(function(){
+             $("#everything").html("");
+             var val = $("#letters").val();
+             if(val.length != 16){
+                 alert("PLEASE INPUT 16 LETTERS W/ NO SPACES (IE abcdefghijklmnop)");
+             }
+             else
+                 translate();
+         });
+         
+
+  
+
+
+        </script>
+    </body>
+</html>
