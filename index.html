@@ -10,10 +10,22 @@
             #board{
                 font-size: 50px;
                 text-align:center;
+              
             }
             input{
                 background-color:#C0C0C0;
             }
+            th, td{
+                border: 1px solid black;
+                text-align: center;
+                font-size: 50px;
+            }
+            table{
+                table-layout: fixed;
+                width:300px;
+                background-color:#EFE8E8;
+            }
+
         </style>
     </head>
     <body>
@@ -25,25 +37,34 @@
         <button id="start">Start with input</button> 
         <p>OR</p>
         <button id="randomize">Randomize & Start</button>        
-        <div id="board"></div>
+        <div id="boardA"></div>
         <button id="getAll">Get all possible words</button> 
         <div id="everything"></div>
-    
+        
         <script>
+        
     
-            function buildBoard(val){
-                var myBoard = "";
-                for (var i = 0; i <= 15; i++){
-                    myBoard += val[i];
-                    if(val[i] == "q")
-                        myBoard+="u";
-                    if((i+1)%4==0)
-                        myBoard += "<br>";
-                    else
-                        myBoard+= "  ";
+    
+            function buildBoard2(val){
+                var wordIndex = 0;
+                var code = "<table align=\"center\">";
+                for(var row = 0; row < 4; row++){
+                    code += "<tr>"
+                    for (var col = 0; col < 4; col++){
+                        code += "<td>"
+                        var value = val[wordIndex++];
+                        code += value;
+                        if(value== "q")
+                            code+="u";    // myBoard+="u";
+                        code += "</td>"
+                    }
+                    code += "</tr>"
                 }
-                $("#board").html(myBoard); 
+                code += "</table>";
+                $("#boardA").html(code); 
             }
+        
+    
                     
             function getAllWords(){
             
@@ -97,13 +118,11 @@
             $("#randomize").click(function() {
                 $("#everything").html("");
                 $("#letters").val(getRandom16());
-                buildBoard($("#letters").val());
+                buildBoard2($("#letters").val());
+                
             });
         
-            $("#hide").click(function() {
-                $("#everything").html("");
-            });
-        
+
         </script>
     </body>
 </html>
