@@ -67,7 +67,6 @@
     
                     
             function getAllWords(){
-            
                 var myurl = "http://api.codebox.org.uk/boggle/" + $("#letters").val();
                 console.log(myurl);    
                 $.ajax({
@@ -95,7 +94,7 @@
                 if(val.length != 16)
                     alert("PLEASE INPUT 16 LETTERS W/ NO SPACES (IE abcdefghijklmnop)");
                 else
-                    buildBoard($("#letters").val());
+                    buildBoard2($("#letters").val());
             });
             
              $("#getAll").click(function(){
